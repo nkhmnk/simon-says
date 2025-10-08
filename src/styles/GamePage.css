@@ -1,0 +1,12 @@
+.game-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.tile-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 450px;
+  margin: 0 auto;
+}
