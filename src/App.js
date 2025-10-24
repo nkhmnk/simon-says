@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StartPage from "./pages/StartPage";
 import GamePage from "./pages/GamePage";
 import ResultPage from "./pages/ResultPage";
@@ -8,6 +8,13 @@ import useSimonGame from "./hooks/useSimonGame";
 function App() {
   const [page, setPage] = useState("start");
   const game = useSimonGame();
+
+  useEffect(() => {
+    // when hook marks game over, navigate to result page
+    if (game.isGameOver) {
+      setPage("result");
+    }
+  }, [game.isGameOver]);
 
   return (
     <div className="App">
