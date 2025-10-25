@@ -1,12 +1,12 @@
 import Header from "../components/Header";
 import "../styles/ResultPage.css";
 
-const ResultPage = () => {
+const ResultPage = ({ score, onRestart }) => {
   return (
     <div className="result-page">
       <Header title="Results" />
-      <p>Your score: 0</p>
-      <button>Play Again</button>
+      <p>Your score: {score}</p>
+      <button onClick={onRestart}>Play Again</button>
     </div>
   );
 };
