@@ -1,5 +1,5 @@
-import Header from "../components/Header";
-import "../styles/StartPage.css";
+import Header from "../components/Header/Header";
+import "../StartPage.css";
 
 const StartPage = () => {
   return (

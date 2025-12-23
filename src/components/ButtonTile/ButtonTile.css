@@ -1,0 +1,26 @@
+.button-tile {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.button-tile:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+.red {
+  background-color: #e74c3c;
+}
+.green {
+  background-color: #2ecc71;
+}
+.blue {
+  background-color: #3498db;
+}
+.yellow {
+  background-color: #f1c40f;
+}
