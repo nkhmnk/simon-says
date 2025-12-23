@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import { SettingsContext } from '../../context/SettingsContext';
 import './SettingsForm.css';
 
-// Схема валідації Yup
 const schema = yup.object().shape({
   playerName: yup
     .string()

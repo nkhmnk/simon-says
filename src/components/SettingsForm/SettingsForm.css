@@ -33,7 +33,6 @@
   font-size: 1rem;
 }
 
-/* Стиль для інпуту з помилкою */
 .error-input {
   border-color: #e74c3c !important;
 }

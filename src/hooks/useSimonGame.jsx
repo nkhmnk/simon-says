@@ -22,15 +22,18 @@ export default function useSimonGame(settings = {}) {
     timers.current = [];
   };
 
-  const showSequence = (seq) => {
+ const showSequence = (seq) => {
     setIsShowing(true);
     setIsUserTurn(false);
     clearTimers();
-    
+
+
+    const gameSpeed = Number(settings.speed) || 600;
+    const highlightDuration = gameSpeed * 0.8;
+
     seq.forEach((color, idx) => {
-      const speed = settings.speed || 600;
-      const t1 = setTimeout(() => setActiveColor(color), speed * idx + 200);
-      const t2 = setTimeout(() => setActiveColor(null), speed * idx + 500);
+      const t1 = setTimeout(() => setActiveColor(color), gameSpeed * idx);
+      const t2 = setTimeout(() => setActiveColor(null), gameSpeed * idx + highlightDuration);
       timers.current.push(t1, t2);
     });
 
@@ -38,7 +41,7 @@ export default function useSimonGame(settings = {}) {
       setIsShowing(false);
       setIsUserTurn(true);
       setPlayerIndex(0);
-    }, (settings.speed || 600) * seq.length + 300);
+    }, gameSpeed * seq.length);
     timers.current.push(endTimer);
   };
 
@@ -60,7 +63,6 @@ export default function useSimonGame(settings = {}) {
     timers.current.push(t);
 
     if (color !== sequence[playerIndex]) {
-      // ПОМИЛКА: Встановлюємо фінальний рахунок (кількість успішно завершених рівнів)
       const finalScore = level - 1;
       setScore(finalScore);
       setIsGameOver(true);
@@ -72,7 +74,6 @@ export default function useSimonGame(settings = {}) {
     setPlayerIndex(nextIndex);
 
     if (nextIndex === sequence.length) {
-      // ПЕРЕМОГА В РАУНДІ
       setScore(level); 
       setIsUserTurn(false);
       const nextSeq = [...sequence, getRandomColor()];
@@ -88,7 +89,7 @@ export default function useSimonGame(settings = {}) {
 
   return {
     level,
-    score, // Обов'язково повертаємо score
+    score,
     isShowing,
     activeColor,
     isUserTurn,

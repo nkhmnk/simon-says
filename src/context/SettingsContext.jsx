@@ -1,13 +1,11 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// Створюємо контекст
 export const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
-  // Ініціалізуємо стан з localStorage або значеннями за замовчуванням
   const [settings, setSettingsState] = useState(() => {
-    const savedSettings = localStorage.getItem('simon_settings');
-    return savedSettings ? JSON.parse(savedSettings) : {
+    const saved = localStorage.getItem('simon_settings');
+    return saved ? JSON.parse(saved) : {
       playerName: 'Гравець',
       difficulty: 'normal',
       elementsCount: 4,
@@ -15,18 +13,35 @@ export const SettingsProvider = ({ children }) => {
     };
   });
 
-  // Щоразу, коли налаштування змінюються, зберігаємо їх у localStorage
+  // Додаємо стан для рекордів
+  const [leaderboard, setLeaderboard] = useState(() => {
+    const saved = localStorage.getItem('simon_leaderboard');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   useEffect(() => {
     localStorage.setItem('simon_settings', JSON.stringify(settings));
   }, [settings]);
 
-  // Функція для оновлення налаштувань
+  // Функція для додавання нового рекорду
+  const addRecord = (name, score) => {
+    if (score <= 0) return; 
+
+    const newRecord = { name, score, id: Date.now() };
+    const updatedBoard = [...leaderboard, newRecord]
+      .sort((a, b) => b.score - a.score) 
+      .slice(0, 5); 
+
+    setLeaderboard(updatedBoard);
+    localStorage.setItem('simon_leaderboard', JSON.stringify(updatedBoard));
+  };
+
   const updateSettings = (newSettings) => {
     setSettingsState((prev) => ({ ...prev, ...newSettings }));
   };
 
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings }}>
+    <SettingsContext.Provider value={{ settings, updateSettings, leaderboard, addRecord }}>
       {children}
     </SettingsContext.Provider>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import Header from '../../components/Header/Header';
 import ButtonTile from '../../components/ButtonTile/ButtonTile';
-import Modal from '../../components/Modal/Modal'; // Новий імпорт
+import Modal from '../../components/Modal/Modal';
 import useSimonGame from '../../hooks/useSimonGame';
 import { SettingsContext } from '../../context/SettingsContext';
 
@@ -9,16 +9,15 @@ import './GamePage.css';
 
 const GamePage = ({ onGameOver }) => {
   const { settings } = useContext(SettingsContext);
+  
   const game = useSimonGame(settings);
   
-  // Локальний стан для керування модальним вікном (Етап 3)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     game.startGame();
   }, []); 
 
-  // Замість автоматичного onGameOver, відкриваємо модалку
   useEffect(() => {
     if (game.isGameOver) {
       setIsModalOpen(true);
@@ -27,12 +26,12 @@ const GamePage = ({ onGameOver }) => {
 
   const handleRestart = () => {
     setIsModalOpen(false);
-    game.startGame(); // Починаємо заново на цій же сторінці
+    game.startGame();
   };
 
   const handleExitToResults = () => {
     setIsModalOpen(false);
-    onGameOver(game.score); // Перехід до загальних результатів
+    onGameOver(game.score);
   };
 
   const ALL_COLORS = ["red", "green", "blue", "yellow", "orange", "purple", "pink", "cyan"];
@@ -42,8 +41,13 @@ const GamePage = ({ onGameOver }) => {
     <div className="game-page">
       <Header title={`Рівень ${game.level}`} />
       
+      <div className="player-info">
+        <span>Гравець: <strong>{settings.playerName}</strong></span>
+        <span>Швидкість: <strong>{settings.speed}мс</strong></span>
+      </div>
+
       <div className="status">
-        {game.isShowing && <span className="fade-in">Спостерігайте за послідовністю...</span>}
+        {game.isShowing && <span className="fade-in">Запам'ятовуйте...</span>}
         {!game.isShowing && game.isUserTurn && <span className="pulse">Ваш хід!</span>}
       </div>
 
@@ -58,12 +62,14 @@ const GamePage = ({ onGameOver }) => {
         ))}
       </div>
 
-      {/* ПОРТАЛ: Діалогове вікно завершення гри (Лаба 3) */}
       <Modal isOpen={isModalOpen}>
         <div className="modal-inner">
-          <h2>Гра завершена!</h2>
-          <p className="modal-score">Ваш результат: <span>{game.score}</span></p>
-          <p>Гравець: <strong>{settings.playerName}</strong></p>
+          <h2>Гру завершено!</h2>
+          <div className="modal-data">
+            <p>Результат: <span>{game.score}</span></p>
+            <p>Рівень: <span>{game.level}</span></p>
+            <p>Гравець: <span>{settings.playerName}</span></p>
+          </div>
           
           <div className="modal-actions">
             <button className="btn-restart" onClick={handleRestart}>
