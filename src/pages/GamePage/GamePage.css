@@ -1,28 +1,43 @@
+.game-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.status {
+  height: 30px;
+  margin: 20px 0;
+  font-weight: bold;
+  color: #3498db;
+}
+
+/* Гнучка сітка на Flexbox для ідеального центрування */
 .tile-container {
   display: flex;
-  flex-wrap: wrap; /* Дозволяє плиткам переноситися на наступний рядок */
-  justify-content: center; /* Центрує плитки в рядку (вирішує проблему з 5-ю плиткою) */
+  flex-wrap: wrap;
+  justify-content: center;
   align-content: center;
   gap: 20px;
   width: 100%;
-  max-width: 700px; /* Достатньо для 4 плиток в ряд */
-  margin: 40px auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-/* Налаштування розміру плиток, щоб вони вписувались у ваші схеми */
+/* Динамічні розміри плиток */
 .button-tile {
-  flex: 0 1 calc(25% - 20px); /* По замовчуванню 4 в ряд (для 8 плиток) */
+  /* Для 6 плиток: 3 в ряд. Для 4 плиток: 2 в ряд. */
+  flex: 0 1 calc(33.333% - 20px); 
   min-width: 130px;
   aspect-ratio: 1 / 1;
 }
 
-/* Спеціальна логіка для 6 плиток (2 ряди по 3) */
+/* Якщо плиток 4 або менше, робимо їх більшими (2x2) */
+.tile-container:has(.button-tile:nth-child(4):last-child) .button-tile {
+  flex: 0 1 calc(45% - 20px);
+}
+
+/* Якщо плиток 8, робимо 4 в ряд */
 .tile-container:has(.button-tile:nth-child(8):last-child) .button-tile {
   flex: 0 1 calc(25% - 20px);
 }
-
-/* Спеціальна логіка для 4 плиток (2 ряди по 2) */
-.tile-container:has(.button-tile:nth-child(4):last-child) .button-tile {
-  flex: 0 1 calc(45% - 20px); /* Робимо їх трохи більшими */
-}
-
