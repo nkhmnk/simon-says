@@ -1,53 +1,44 @@
-import React from "react";
-import Header from "../components/Header/Header";
-import ButtonTile from "../components/ButtonTile/ButtonTile";
-import "./GamePage.css";
+import React, { useEffect, useContext } from "react";
+import Header from '../../components/Header/Header';
+import ButtonTile from '../../components/ButtonTile/ButtonTile';
+import useSimonGame from '../../hooks/useSimonGame';
+import { SettingsContext } from '../../context/SettingsContext';
+import './GamePage.css';
 
-const GamePage = ({
-  level,
-  activeColor,
-  isShowing,
-  isUserTurn,
-  isGameOver,
-  handleTileClick,
-  remainingTime,
-  timeLimit,
-  elementsCount 
-}) => {
+const GamePage = ({ onGameOver }) => {
+  const { settings } = useContext(SettingsContext);
+  
+  const game = useSimonGame(settings);
+
+  useEffect(() => {
+    game.startGame();
+  }, []); 
+
+  // 2. ВИПРАВЛЕННЯ ПОМИЛКИ "0 БАЛІВ":
+  // Слідкуємо за зміною стану isGameOver. 
+  // Коли гра закінчується, ми беремо актуальний score з хука.
+  useEffect(() => {
+    if (game.isGameOver) {
+      // Викликаємо функцію з App.jsx і передаємо фінальний результат
+      onGameOver(game.score);
+    }
+  }, [game.isGameOver, game.score, onGameOver]);
+
+  // Список всіх можливих кольорів
   const ALL_COLORS = ["red", "green", "blue", "yellow", "orange", "purple", "pink", "cyan"];
   
-  const visibleColors = ALL_COLORS.slice(0, elementsCount || 4);
+  // Обрізаємо масив відповідно до налаштувань складності (elementsCount)
+  const visibleColors = ALL_COLORS.slice(0, settings.elementsCount || 4);
 
   return (
     <div className="game-page">
-      <Header title={`Рівень ${level}`} />
+      {/* Header відображає поточний рівень */}
+      <Header title={`Рівень ${game.level}`} />
       
       <div className="status">
-        {isShowing && <span>Спостерігайте послідовність...</span>}
-        {!isShowing && isUserTurn && <span>Ваш хід</span>}
-        {isGameOver && <span>Гра завершена</span>}
-        
-        {/* Рендер таймера, якщо передано час */}
-        {remainingTime !== null && (
-          <div style={{ marginTop: 12 }}>
-            <strong>Залишилося: {remainingTime}s</strong>
-            <div className="timer-bar" aria-hidden>
-              {(() => {
-                const limit = Number(timeLimit) || 30;
-                const percent = Math.max(0, Math.min(100, Math.round((remainingTime / limit) * 100)));
-                const isLow = remainingTime <= 5;
-                const isHalf = remainingTime <= limit / 2;
-                const className = `timer-fill ${isLow ? 'low' : ''} ${isHalf ? 'half' : ''}`.trim();
-                return (
-                  <div
-                    className={className}
-                    style={{ width: `${percent}%` }}
-                  />
-                );
-              })()}
-            </div>
-          </div>
-        )}
+        {game.isShowing && <span className="fade-in">Спостерігайте за послідовністю...</span>}
+        {!game.isShowing && game.isUserTurn && <span className="pulse">Ваш хід!</span>}
+        {game.isGameOver && <span>Гра завершена</span>}
       </div>
 
       <div className="tile-container">
@@ -55,8 +46,10 @@ const GamePage = ({
           <ButtonTile
             key={color}
             color={color}
-            active={activeColor === color}
-            onClick={() => handleTileClick(color)}
+            // active стає true, коли хук підсвічує цей колір
+            active={game.activeColor === color}
+            // Передаємо функцію кліку в чистий компонент плитки
+            onClick={() => game.handleTileClick(color)}
           />
         ))}
       </div>
