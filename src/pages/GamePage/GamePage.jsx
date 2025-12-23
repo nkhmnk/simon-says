@@ -14,21 +14,15 @@ const GamePage = ({ onGameOver }) => {
     game.startGame();
   }, []); 
 
-  // 2. ВИПРАВЛЕННЯ ПОМИЛКИ "0 БАЛІВ":
-  // Слідкуємо за зміною стану isGameOver. 
-  // Коли гра закінчується, ми беремо актуальний score з хука.
   useEffect(() => {
     if (game.isGameOver) {
-      // Викликаємо функцію з App.jsx і передаємо фінальний результат
       onGameOver(game.score);
     }
   }, [game.isGameOver, game.score, onGameOver]);
 
-  // Список всіх можливих кольорів
   const ALL_COLORS = ["red", "green", "blue", "yellow", "orange", "purple", "pink", "cyan"];
   
-  // Обрізаємо масив відповідно до налаштувань складності (elementsCount)
-  const visibleColors = ALL_COLORS.slice(0, settings.elementsCount || 4);
+  const visibleColors = ALL_COLORS.slice(0, settings.elementsCount);
 
   return (
     <div className="game-page">

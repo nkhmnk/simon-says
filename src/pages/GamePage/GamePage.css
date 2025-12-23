@@ -1,12 +1,28 @@
-.game-page {
-  text-align: center;
-  padding: 40px;
+.tile-container {
+  display: flex;
+  flex-wrap: wrap; /* Дозволяє плиткам переноситися на наступний рядок */
+  justify-content: center; /* Центрує плитки в рядку (вирішує проблему з 5-ю плиткою) */
+  align-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 700px; /* Достатньо для 4 плиток в ряд */
+  margin: 40px auto;
 }
 
-.tile-container {
-  display: grid;
-  grid-template-columns: repeat(2, 150px);
-  gap: 20px;
-  justify-content: center;
-  margin-top: 40px;
+/* Налаштування розміру плиток, щоб вони вписувались у ваші схеми */
+.button-tile {
+  flex: 0 1 calc(25% - 20px); /* По замовчуванню 4 в ряд (для 8 плиток) */
+  min-width: 130px;
+  aspect-ratio: 1 / 1;
 }
+
+/* Спеціальна логіка для 6 плиток (2 ряди по 3) */
+.tile-container:has(.button-tile:nth-child(8):last-child) .button-tile {
+  flex: 0 1 calc(25% - 20px);
+}
+
+/* Спеціальна логіка для 4 плиток (2 ряди по 2) */
+.tile-container:has(.button-tile:nth-child(4):last-child) .button-tile {
+  flex: 0 1 calc(45% - 20px); /* Робимо їх трохи більшими */
+}
+
