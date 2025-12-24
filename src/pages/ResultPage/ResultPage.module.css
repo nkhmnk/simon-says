@@ -1,12 +1,12 @@
-.result-page {
+.resultPage {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-
   align-items: center;
+  background-color: #0b0b14; 
 }
 
-.result-container {
+.resultContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -18,8 +18,7 @@
   animation: fadeIn 0.8s ease-out;
 }
 
-/* Картка з результатом */
-.score-card {
+.scoreCard {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -30,7 +29,7 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
-.player-badge {
+.playerBadge {
   background: #3498db;
   display: inline-block;
   padding: 5px 20px;
@@ -41,29 +40,30 @@
   letter-spacing: 1px;
 }
 
-.score-label {
+.scoreLabel {
   font-size: 1.2rem;
   opacity: 0.7;
   margin-bottom: 10px;
 }
 
-.score-value {
+.scoreValue {
   font-size: 6rem;
   font-weight: 900;
   line-height: 1;
   background: linear-gradient(to bottom, #f1c40f, #e67e22);
   -webkit-background-clip: text;
+  background-clip: text; 
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 10px rgba(241, 196, 15, 0.3));
 }
 
-.result-navigation {
+.resultNavigation {
   display: flex;
   width: 100%;
   gap: 15px;
 }
 
-.btn-action {
+.btnAction {
   flex: 1;
   padding: 18px;
   border-radius: 15px;
@@ -74,19 +74,19 @@
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.btn-action.restart {
+.restart {
   background: #2ecc71;
   color: white;
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
 }
 
-.btn-action.home {
+.home {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.btn-action:hover {
+.btnAction:hover {
   transform: translateY(-5px);
   filter: brightness(1.1);
 }
@@ -94,4 +94,14 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.scoreCard {
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(15px); /* Ефект розмиття скла */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 30px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }

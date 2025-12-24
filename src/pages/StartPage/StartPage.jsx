@@ -1,20 +1,26 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import SettingsForm from '../../components/SettingsForm/SettingsForm';
-import './StartPage.css';
+import styles from './StartPage.module.css'; 
 
-const StartPage = ({ onStart }) => {
+const StartPage = () => {
+  const navigate = useNavigate(); 
+
   return (
-    <div className="start-page">
+    <div className={styles.startPage}>
       <Header title="Simon Says" />
       
-      <main className="start-content">
-        <section className="settings-section">
+      <main className={styles.startContent}>
+        <section className={styles.settingsSection}>
           <h3>Налаштування гри</h3>
           <SettingsForm />
         </section>
 
-        <button className="start-btn" onClick={onStart}>
+        <button 
+          className={styles.startBtn} 
+          onClick={() => navigate('/game')}
+        >
           Почати гру
         </button>
       </main>

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { SettingsContext } from '../../context/SettingsContext';
-import './SettingsForm.css';
+import styles from './SettingsForm.module.css';
 
 const schema = yup.object().shape({
   playerName: yup
@@ -35,20 +35,23 @@ const SettingsForm = () => {
   };
 
   return (
-    <form className="settings-form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="form-group">
+    <form className={styles.settingsForm} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.formGroup}>
         <label>Ім'я гравця:</label>
-        <input {...register("playerName")} className={errors.playerName ? "error-input" : ""} />
-        {errors.playerName && <span className="error-msg">{errors.playerName.message}</span>}
+        <input 
+          {...register("playerName")} 
+          className={errors.playerName ? styles.errorInput : ""} 
+        />
+        {errors.playerName && <span className={styles.errorMsg}>{errors.playerName.message}</span>}
       </div>
 
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label>Кількість елементів (4-8):</label>
         <input type="number" {...register("elementsCount")} />
-        {errors.elementsCount && <span className="error-msg">{errors.elementsCount.message}</span>}
+        {errors.elementsCount && <span className={styles.errorMsg}>{errors.elementsCount.message}</span>}
       </div>
 
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label>Швидкість (мс):</label>
         <select {...register("speed")}>
           <option value={800}>Повільно (800мс)</option>
@@ -57,7 +60,7 @@ const SettingsForm = () => {
         </select>
       </div>
 
-      <button type="submit" className="save-btn">Зберегти налаштування</button>
+      <button type="submit" className={styles.saveBtn}>Зберегти налаштування</button>
     </form>
   );
 };

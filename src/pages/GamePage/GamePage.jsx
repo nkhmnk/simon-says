@@ -1,17 +1,18 @@
 import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from '../../components/Header/Header';
 import ButtonTile from '../../components/ButtonTile/ButtonTile';
 import Modal from '../../components/Modal/Modal';
 import useSimonGame from '../../hooks/useSimonGame';
 import { SettingsContext } from '../../context/SettingsContext';
 
-import './GamePage.css';
+import styles from './GamePage.module.css';
+import modalStyles from '../../components/Modal/Modal.module.css';
 
-const GamePage = ({ onGameOver }) => {
-  const { settings } = useContext(SettingsContext);
-  
+const GamePage = () => {
+  const { settings, addRecord } = useContext(SettingsContext);
   const game = useSimonGame(settings);
-  
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -24,58 +25,51 @@ const GamePage = ({ onGameOver }) => {
     }
   }, [game.isGameOver]);
 
-  const handleRestart = () => {
-    setIsModalOpen(false);
-    game.startGame();
-  };
-
   const handleExitToResults = () => {
     setIsModalOpen(false);
-    onGameOver(game.score);
+    const sessionId = `${settings.playerName.replace(/\s/g, '_')}_${Date.now()}`;
+    
+    addRecord(settings.playerName, game.score, sessionId);
+    
+    navigate(`/result/${sessionId}`, { state: { score: game.score } });
   };
 
   const ALL_COLORS = ["red", "green", "blue", "yellow", "orange", "purple", "pink", "cyan"];
   const visibleColors = ALL_COLORS.slice(0, settings.elementsCount);
 
   return (
-    <div className="game-page">
+    <div className={styles.gamePage}>
       <Header title={`Рівень ${game.level}`} />
       
-      <div className="player-info">
+      <div className={styles.playerInfo}>
         <span>Гравець: <strong>{settings.playerName}</strong></span>
         <span>Швидкість: <strong>{settings.speed}мс</strong></span>
       </div>
 
-      <div className="status">
-        {game.isShowing && <span className="fade-in">Запам'ятовуйте...</span>}
-        {!game.isShowing && game.isUserTurn && <span className="pulse">Ваш хід!</span>}
-      </div>
-
-      <div className="tile-container">
+      <div className={styles.tileContainer}>
         {visibleColors.map((color) => (
-          <ButtonTile
-            key={color}
-            color={color}
-            active={game.activeColor === color}
-            onClick={() => game.handleTileClick(color)}
-          />
+          <div key={color} className={styles.tileItem}>
+            <ButtonTile
+              color={color}
+              active={game.activeColor === color}
+              onClick={() => game.handleTileClick(color)}
+            />
+          </div>
         ))}
       </div>
 
       <Modal isOpen={isModalOpen}>
-        <div className="modal-inner">
+        <div className={styles.modalInner}>
           <h2>Гру завершено!</h2>
-          <div className="modal-data">
+          <div className={styles.modalData}>
             <p>Результат: <span>{game.score}</span></p>
             <p>Рівень: <span>{game.level}</span></p>
-            <p>Гравець: <span>{settings.playerName}</span></p>
           </div>
-          
-          <div className="modal-actions">
-            <button className="btn-restart" onClick={handleRestart}>
+          <div className={modalStyles.modalActions}>
+            <button className={modalStyles.btnRestart} onClick={() => { setIsModalOpen(false); game.startGame(); }}>
               Наступний тур
             </button>
-            <button className="btn-exit" onClick={handleExitToResults}>
+            <button className={modalStyles.btnExit} onClick={handleExitToResults}>
               До результатів
             </button>
           </div>

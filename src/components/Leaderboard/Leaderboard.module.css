@@ -5,7 +5,7 @@
   padding: 20px;
 }
 
-.leaderboard h3 {
+.title {
   font-size: 1rem;
   text-transform: uppercase;
   color: #3498db;
@@ -13,12 +13,12 @@
   letter-spacing: 2px;
 }
 
-.leaderboard ul {
+.list {
   list-style: none;
   padding: 0;
 }
 
-.leaderboard li {
+.item {
   display: flex;
   align-items: center;
   padding: 12px 15px;
@@ -28,7 +28,7 @@
   transition: background 0.2s;
 }
 
-.leaderboard li:hover {
+.item:hover {
   background: rgba(255, 255, 255, 0.07);
 }
 
@@ -48,7 +48,7 @@
   color: #f1c40f;
 }
 
-.top-one {
+.topOne {
   background: rgba(241, 196, 15, 0.1) !important;
   border: 1px solid rgba(241, 196, 15, 0.3);
 }

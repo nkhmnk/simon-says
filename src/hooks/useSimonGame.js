@@ -20,7 +20,6 @@ export default function useSimonGame() {
 
   useEffect(() => {
     return () => {
-      // cleanup timers on unmount
       timers.current.forEach((t) => clearTimeout(t));
       timers.current = [];
     };
@@ -40,7 +39,6 @@ export default function useSimonGame() {
       const t2 = setTimeout(() => setActiveColor(null), 600 * idx + 500);
       timers.current.push(t1, t2);
     });
-    // after sequence shown, allow user to play
     const endTimer = setTimeout(() => {
       setIsShowing(false);
       setIsUserTurn(true);
@@ -56,10 +54,8 @@ export default function useSimonGame() {
     setLevel(1);
     setScore(0);
     setIsGameOver(false);
-    // first round
     const first = [getRandomColor()];
     setSequence(first);
-    // small delay so UI can update
     setTimeout(() => showSequence(first), 200);
   };
 
@@ -72,15 +68,12 @@ export default function useSimonGame() {
 
   const handleTileClick = (color) => {
     if (!isUserTurn || isShowing || isGameOver) return;
-    // highlight briefly for feedback
     setActiveColor(color);
     const t = setTimeout(() => setActiveColor(null), 200);
     timers.current.push(t);
 
-    // check sequence
     const expected = sequence[playerIndex];
     if (color !== expected) {
-      // game over
       setIsGameOver(true);
       setIsUserTurn(false);
       setScore(level - 1);
@@ -91,10 +84,8 @@ export default function useSimonGame() {
     setPlayerIndex(nextPlayerIndex);
 
     if (nextPlayerIndex === sequence.length) {
-      // user completed the sequence
       setScore((s) => Math.max(s, level));
       setIsUserTurn(false);
-      // small delay then next round
       const t2 = setTimeout(() => nextRound(sequence), 700);
       timers.current.push(t2);
     }
