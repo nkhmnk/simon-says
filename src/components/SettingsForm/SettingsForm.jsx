@@ -1,66 +1,56 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { SettingsContext } from '../../context/SettingsContext';
+import { useSelector, useDispatch } from 'react-redux'; // Хуки Redux
+import { updateSettings } from '../../store/slices/settingsSlice'; // Екшн
 import styles from './SettingsForm.module.css';
 
 const schema = yup.object().shape({
-  playerName: yup
-    .string()
-    .required("Ім'я обов'язкове")
-    .min(2, "Мінімум 2 символи")
-    .max(15, "Максимум 15 символів"),
-  elementsCount: yup
-    .number()
-    .typeError("Має бути числом")
-    .min(4, "Мінімум 4 плитки")
-    .max(8, "Максимум 8 плиток"),
-  speed: yup
-    .number()
-    .required()
+  playerName: yup.string().required("Ім'я обов'язкове").min(2, "Мінімум 2 символи"),
+  elementsCount: yup.number().min(4).max(8),
+  speed: yup.number().required()
 });
 
 const SettingsForm = () => {
-  const { settings, updateSettings } = useContext(SettingsContext);
+  const dispatch = useDispatch();
+  // Отримуємо поточні налаштування з Redux
+  const settings = useSelector((state) => state.settings);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: settings
+    defaultValues: settings // Встановлюємо значення з Redux за замовчуванням
   });
 
   const onSubmit = (data) => {
-    updateSettings(data);
-    alert("Налаштування збережено!");
+    // Викликаємо dispatch замість контексту
+    dispatch(updateSettings(data));
+    alert("Налаштування збережено в Redux!");
   };
 
   return (
     <form className={styles.settingsForm} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formGroup}>
-        <label>Ім'я гравця:</label>
-        <input 
-          {...register("playerName")} 
-          className={errors.playerName ? styles.errorInput : ""} 
-        />
+        <label>Ім'я гравця</label>
+        <input {...register("playerName")} className={errors.playerName ? styles.errorInput : ""} />
         {errors.playerName && <span className={styles.errorMsg}>{errors.playerName.message}</span>}
       </div>
 
       <div className={styles.formGroup}>
-        <label>Кількість елементів (4-8):</label>
+        <label>Кількість плиток</label>
         <input type="number" {...register("elementsCount")} />
-        {errors.elementsCount && <span className={styles.errorMsg}>{errors.elementsCount.message}</span>}
       </div>
 
       <div className={styles.formGroup}>
-        <label>Швидкість (мс):</label>
+        <label>Швидкість</label>
         <select {...register("speed")}>
-          <option value={800}>Повільно (800мс)</option>
-          <option value={600}>Середньо (600мс)</option>
-          <option value={400}>Швидко (400мс)</option>
+          <option value={800}>Повільно</option>
+          <option value={600}>Середньо</option>
+          <option value={400}>Швидко</option>
         </select>
       </div>
 
-      <button type="submit" className={styles.saveBtn}>Зберегти налаштування</button>
+      <button type="submit" className={styles.saveBtn}>Зберегти в Store</button>
     </form>
   );
 };
