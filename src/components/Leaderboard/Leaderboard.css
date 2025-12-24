@@ -1,0 +1,54 @@
+.leaderboard {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.leaderboard h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #3498db;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+}
+
+.leaderboard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard li {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.leaderboard li:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.rank {
+  font-weight: bold;
+  color: #3498db;
+  width: 30px;
+}
+
+.name {
+  flex: 1;
+  font-weight: 500;
+}
+
+.score {
+  font-weight: bold;
+  color: #f1c40f;
+}
+
+.top-one {
+  background: rgba(241, 196, 15, 0.1) !important;
+  border: 1px solid rgba(241, 196, 15, 0.3);
+}
