@@ -53,6 +53,7 @@
   line-height: 1;
   background: linear-gradient(to bottom, #f1c40f, #e67e22);
   -webkit-background-clip: text;
+  background-clip: text; 
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 10px rgba(241, 196, 15, 0.3));
 }

@@ -1,9 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import SettingsForm from '../../components/SettingsForm/SettingsForm';
 import './StartPage.css';
 
-const StartPage = ({ onStart }) => {
+const StartPage = () => {
+  const navigate = useNavigate();
+
+  const handleStart = () => {
+    // Перехід на сторінку гри за допомогою роутера
+    navigate('/game');
+  };
+
   return (
     <div className="start-page">
       <Header title="Simon Says" />
@@ -14,7 +22,7 @@ const StartPage = ({ onStart }) => {
           <SettingsForm />
         </section>
 
-        <button className="start-btn" onClick={onStart}>
+        <button className="start-btn" onClick={handleStart}>
           Почати гру
         </button>
       </main>

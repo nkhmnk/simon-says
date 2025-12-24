@@ -1,45 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import StartPage from './pages/StartPage/StartPage';
 import GamePage from './pages/GamePage/GamePage';
 import ResultPage from './pages/ResultPage/ResultPage';
 import "./App.css";
 
 function App() {
-  const [page, setPage] = useState("start");
-  const [finalScore, setFinalScore] = useState(0);
-
-  const startGame = () => {
-    setFinalScore(0);
-    setPage("game");
-  };
-
-  const handleGameOver = (score) => {
-    setFinalScore(score);
-    setPage("result");
-  };
-
-  const goToStart = () => {
-    setPage("start");
-  };
-
   return (
-    <div className="App">
-      {page === "start" && (
-        <StartPage onStart={startGame} />
-      )}
-      
-      {page === "game" && (
-        <GamePage onGameOver={handleGameOver} />
-      )}
-      
-      {page === "result" && (
-        <ResultPage 
-          score={finalScore} 
-          onRestart={startGame} 
-          onMain={goToStart} 
-        />
-      )}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Головна сторінка */}
+          <Route path="/" element={<StartPage />} />
+          
+          {/* Сторінка самої гри */}
+          <Route path="/game" element={<GamePage />} />
+          
+          {/* Динамічний роутинг для результатів з ID користувача */}
+          <Route path="/result/:userId" element={<ResultPage />} />
+          
+          {/* Перенаправлення на головну, якщо маршрут не існує */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

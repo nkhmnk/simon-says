@@ -1,17 +1,16 @@
 import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from '../../components/Header/Header';
 import ButtonTile from '../../components/ButtonTile/ButtonTile';
 import Modal from '../../components/Modal/Modal';
 import useSimonGame from '../../hooks/useSimonGame';
 import { SettingsContext } from '../../context/SettingsContext';
-
 import './GamePage.css';
 
-const GamePage = ({ onGameOver }) => {
+const GamePage = () => {
   const { settings } = useContext(SettingsContext);
-  
   const game = useSimonGame(settings);
-  
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -31,7 +30,10 @@ const GamePage = ({ onGameOver }) => {
 
   const handleExitToResults = () => {
     setIsModalOpen(false);
-    onGameOver(game.score);
+    // Створюємо динамічний ID (наприклад: Player_17154321)
+    const dynamicId = `${settings.playerName.replace(/\s/g, '_')}_${Date.now()}`;
+    // Переходимо за динамічним маршрутом
+    navigate(`/result/${dynamicId}`, { state: { score: game.score } });
   };
 
   const ALL_COLORS = ["red", "green", "blue", "yellow", "orange", "purple", "pink", "cyan"];
@@ -68,16 +70,11 @@ const GamePage = ({ onGameOver }) => {
           <div className="modal-data">
             <p>Результат: <span>{game.score}</span></p>
             <p>Рівень: <span>{game.level}</span></p>
-            <p>Гравець: <span>{settings.playerName}</span></p>
           </div>
           
           <div className="modal-actions">
-            <button className="btn-restart" onClick={handleRestart}>
-              Наступний тур
-            </button>
-            <button className="btn-exit" onClick={handleExitToResults}>
-              До результатів
-            </button>
+            <button className="btn-restart" onClick={handleRestart}>Наступний тур</button>
+            <button className="btn-exit" onClick={handleExitToResults}>До результатів</button>
           </div>
         </div>
       </Modal>
