@@ -1,25 +1,20 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Leaderboard from "../../components/Leaderboard/Leaderboard";
 import { SettingsContext } from "../../context/SettingsContext";
-import styles from "./ResultPage.module.css"; // Імпорт модулів
+import styles from "./ResultPage.module.css";
 
 const ResultPage = () => {
-  const { settings, addRecord } = useContext(SettingsContext);
+  const { settings, getRecordById } = useContext(SettingsContext);
   const navigate = useNavigate();
-  const { userId } = useParams(); // Отримуємо динамічний ID з URL
+  const { userId } = useParams(); // sessionId з URL
   const location = useLocation();
   
-  // Отримуємо рахунок, переданий через стан навігації
-  const score = location.state?.score || 0;
-
-  useEffect(() => {
-    if (score > 0) {
-      addRecord(settings.playerName, score);
-    }
-  }, [score, settings.playerName, addRecord]);
+  // Отримуємо дані: або з навігації, або з бази рекордів за ID в URL
+  const record = getRecordById(userId);
+  const score = location.state?.score ?? record?.score ?? 0;
 
   return (
     <div className={styles.resultPage}>
@@ -28,7 +23,7 @@ const ResultPage = () => {
       <main className={styles.resultContainer}>
         <section className={styles.scoreCard}>
           <div className={styles.playerBadge}>
-            <span className={styles.playerName}>ID: {userId}</span>
+            <span className={styles.playerName}>ID Сесії: {userId}</span>
           </div>
           <div className={styles.scoreDisplay}>
             <h2 className={styles.scoreLabel}>{settings.playerName}, твій результат</h2>

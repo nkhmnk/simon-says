@@ -13,7 +13,6 @@ export const SettingsProvider = ({ children }) => {
     };
   });
 
-  // Додаємо стан для рекордів
   const [leaderboard, setLeaderboard] = useState(() => {
     const saved = localStorage.getItem('simon_leaderboard');
     return saved ? JSON.parse(saved) : [];
@@ -23,17 +22,27 @@ export const SettingsProvider = ({ children }) => {
     localStorage.setItem('simon_settings', JSON.stringify(settings));
   }, [settings]);
 
-  // Функція для додавання нового рекорду
-  const addRecord = (name, score) => {
+  // Функція для пошуку рекорду за ID (для ResultPage)
+  const getRecordById = (id) => {
+    return leaderboard.find(record => record.sessionId === id);
+  };
+
+  // Оновлена функція додавання рекорду з ID сесії
+  const addRecord = (name, score, sessionId) => {
     if (score <= 0) return; 
 
-    const newRecord = { name, score, id: Date.now() };
-    const updatedBoard = [...leaderboard, newRecord]
-      .sort((a, b) => b.score - a.score) 
-      .slice(0, 5); 
+    // Перевірка на дублікати за sessionId
+    setLeaderboard(prev => {
+      if (prev.some(r => r.sessionId === sessionId)) return prev;
 
-    setLeaderboard(updatedBoard);
-    localStorage.setItem('simon_leaderboard', JSON.stringify(updatedBoard));
+      const newRecord = { name, score, sessionId, id: Date.now() };
+      const updatedBoard = [...prev, newRecord]
+        .sort((a, b) => b.score - a.score) 
+        .slice(0, 5); 
+
+      localStorage.setItem('simon_leaderboard', JSON.stringify(updatedBoard));
+      return updatedBoard;
+    });
   };
 
   const updateSettings = (newSettings) => {
@@ -41,7 +50,7 @@ export const SettingsProvider = ({ children }) => {
   };
 
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings, leaderboard, addRecord }}>
+    <SettingsContext.Provider value={{ settings, updateSettings, leaderboard, addRecord, getRecordById }}>
       {children}
     </SettingsContext.Provider>
   );

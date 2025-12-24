@@ -10,7 +10,7 @@ import styles from './GamePage.module.css';
 import modalStyles from '../../components/Modal/Modal.module.css';
 
 const GamePage = () => {
-  const { settings } = useContext(SettingsContext);
+  const { settings, addRecord } = useContext(SettingsContext);
   const game = useSimonGame(settings);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,8 +27,14 @@ const GamePage = () => {
 
   const handleExitToResults = () => {
     setIsModalOpen(false);
-    const dynamicId = `${settings.playerName.replace(/\s/g, '_')}_${Date.now()}`;
-    navigate(`/result/${dynamicId}`, { state: { score: game.score } });
+    // Створюємо унікальний ID сесії
+    const sessionId = `${settings.playerName.replace(/\s/g, '_')}_${Date.now()}`;
+    
+    // Зберігаємо рекорд безпосередньо в момент завершення
+    addRecord(settings.playerName, game.score, sessionId);
+    
+    // Переходимо на динамічний роут
+    navigate(`/result/${sessionId}`, { state: { score: game.score } });
   };
 
   const ALL_COLORS = ["red", "green", "blue", "yellow", "orange", "purple", "pink", "cyan"];
@@ -56,15 +62,20 @@ const GamePage = () => {
       </div>
 
       <Modal isOpen={isModalOpen}>
-        <h2>Гру завершено!</h2>
-        <p>Ваш результат: {game.score}</p>
-        <div className={modalStyles.modalActions}>
-          <button className={modalStyles.btnRestart} onClick={() => { setIsModalOpen(false); game.startGame(); }}>
-            Наступний тур
-          </button>
-          <button className={modalStyles.btnExit} onClick={handleExitToResults}>
-            До результатів
-          </button>
+        <div className={styles.modalInner}>
+          <h2>Гру завершено!</h2>
+          <div className={styles.modalData}>
+            <p>Результат: <span>{game.score}</span></p>
+            <p>Рівень: <span>{game.level}</span></p>
+          </div>
+          <div className={modalStyles.modalActions}>
+            <button className={modalStyles.btnRestart} onClick={() => { setIsModalOpen(false); game.startGame(); }}>
+              Наступний тур
+            </button>
+            <button className={modalStyles.btnExit} onClick={handleExitToResults}>
+              До результатів
+            </button>
+          </div>
         </div>
       </Modal>
     </div>
