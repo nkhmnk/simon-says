@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './Modal.css';
+import styles from './Modal.module.css'; // Імпорт модулів
 
 const Modal = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className="modal-overlay">
-      <div className="modal-container">
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContainer}>
         {children}
       </div>
     </div>,
-    document.body 
+    document.body
   );
 };
 

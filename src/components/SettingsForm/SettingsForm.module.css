@@ -1,4 +1,4 @@
-.settings-form {
+.settingsForm {
   background: rgba(255, 255, 255, 0.05);
   padding: 20px;
   border-radius: 15px;
@@ -10,20 +10,20 @@
   gap: 15px;
 }
 
-.form-group {
+.formGroup {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
 }
 
-.form-group label {
+.formGroup label {
   font-size: 0.9rem;
   color: #a0a0ba;
 }
 
-.form-group input, 
-.form-group select {
+.formGroup input, 
+.formGroup select {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
@@ -33,17 +33,17 @@
   font-size: 1rem;
 }
 
-.error-input {
+.errorInput {
   border-color: #e74c3c !important;
 }
 
-.error-msg {
+.errorMsg {
   color: #e74c3c;
   font-size: 0.8rem;
   margin-top: 2px;
 }
 
-.save-btn {
+.saveBtn {
   background-color: #3498db;
   color: white;
   padding: 12px;
@@ -54,6 +54,6 @@
   transition: background 0.3s;
 }
 
-.save-btn:hover {
+.saveBtn:hover {
   background-color: #2980b9;
 }

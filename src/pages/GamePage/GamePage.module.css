@@ -1,0 +1,55 @@
+.gamePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.tileContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Центрує плитки в ряду (важливо для 5 та 7) */
+  align-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* БАЗОВИЙ РОЗМІР (По замовчуванню 3 в ряд) */
+/* Підходить для 6 (2х3) та 7 (3-3-1) */
+.tileItem {
+  flex: 0 1 calc(33.333% - 20px);
+  min-width: 120px;
+  aspect-ratio: 1 / 1;
+}
+
+/* ЛОГІКА ДЛЯ 4 ТА 5 ПЛИТОК (2 в ряд) */
+/* 4 плитки: 2 ряди по 2 */
+/* 5 плиток: 2 ряди по 2 + 1 знизу по центру */
+.tileContainer:has(.tileItem:nth-child(4):last-child) .tileItem,
+.tileContainer:has(.tileItem:nth-child(5):last-child) .tileItem {
+  flex: 0 1 calc(45% - 20px);
+}
+
+/* ЛОГІКА ДЛЯ 8 ПЛИТОК (4 в ряд) */
+/* 8 плиток: 2 ряди по 4 */
+.tileContainer:has(.tileItem:nth-child(8):last-child) .tileItem {
+  flex: 0 1 calc(25% - 20px);
+}
+
+/* Додаткові стилі інформації */
+.playerInfo {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #a0a0ba;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.playerInfo strong {
+  color: #00bcd4;
+}

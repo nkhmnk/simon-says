@@ -1,13 +1,12 @@
-import "./ButtonTile.css";
+import React from 'react';
+import styles from './ButtonTile.module.css';
 
 const ButtonTile = ({ color, active, onClick }) => {
   return (
-    <div 
-      className={`button-tile ${color} ${active ? 'active' : ''}`} 
+    <button
+      className={`${styles.buttonTile} ${styles[color]} ${active ? styles.active : ''}`}
       onClick={onClick}
-      role="button"
-      tabIndex={0}
-    ></div>
+    />
   );
 };
 

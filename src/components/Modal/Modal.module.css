@@ -1,4 +1,4 @@
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   backdrop-filter: blur(5px);
 }
 
-.modal-container {
+.modalContainer {
   background: #1a1a2e;
   padding: 40px;
   border-radius: 25px;
@@ -24,20 +24,20 @@
   color: white;
 }
 
-.modal-container h2 {
+.modalContainer h2 {
   color: #e74c3c;
   font-size: 2rem;
   margin-bottom: 15px;
 }
 
-.modal-actions {
+.modalActions {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-top: 25px;
 }
 
-.modal-actions button {
+.modalActions button {
   padding: 12px;
   border-radius: 12px;
   border: none;
@@ -46,6 +46,6 @@
   transition: transform 0.2s;
 }
 
-.btn-restart { background-color: #2ecc71; color: white; }
-.btn-exit { background-color: #3498db; color: white; }
-.modal-actions button:hover { transform: scale(1.05); }
+.btnRestart { background-color: #2ecc71; color: white; }
+.btnExit { background-color: #3498db; color: white; }
+.modalActions button:hover { transform: scale(1.05); }

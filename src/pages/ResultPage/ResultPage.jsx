@@ -4,14 +4,16 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Leaderboard from "../../components/Leaderboard/Leaderboard";
 import { SettingsContext } from "../../context/SettingsContext";
-import "./ResultPage.css";
+import styles from "./ResultPage.module.css"; // Імпорт модулів
 
 const ResultPage = () => {
   const { settings, addRecord } = useContext(SettingsContext);
   const navigate = useNavigate();
-  const { userId } = useParams(); // Отримання ID з URL
+  const { userId } = useParams(); // Отримуємо динамічний ID з URL
   const location = useLocation();
-  const score = location.state?.score || 0; // Отримання рахунку
+  
+  // Отримуємо рахунок, переданий через стан навігації
+  const score = location.state?.score || 0;
 
   useEffect(() => {
     if (score > 0) {
@@ -20,30 +22,36 @@ const ResultPage = () => {
   }, [score, settings.playerName, addRecord]);
 
   return (
-    <div className="result-page">
+    <div className={styles.resultPage}>
       <Header title="Фінал гри" />
 
-      <main className="result-container">
-        <section className="score-card">
-          <div className="player-badge">
-            <span className="player-name">ID: {userId}</span>
+      <main className={styles.resultContainer}>
+        <section className={styles.scoreCard}>
+          <div className={styles.playerBadge}>
+            <span className={styles.playerName}>ID: {userId}</span>
           </div>
-          <div className="score-display">
-            <h2 className="score-label">{settings.playerName}, твій результат</h2>
-            <div className="score-value">{score}</div>
-            <p className="score-subtext">Пройдено рівнів</p>
+          <div className={styles.scoreDisplay}>
+            <h2 className={styles.scoreLabel}>{settings.playerName}, твій результат</h2>
+            <div className={styles.scoreValue}>{score}</div>
+            <p className={styles.scoreSubtext}>Пройдено рівнів</p>
           </div>
         </section>
 
-        <section className="leaderboard-section">
+        <section className={styles.leaderboardSection}>
           <Leaderboard />
         </section>
 
-        <nav className="result-navigation">
-          <button className="btn-action restart" onClick={() => navigate('/game')}>
+        <nav className={styles.resultNavigation}>
+          <button 
+            className={`${styles.btnAction} ${styles.restart}`} 
+            onClick={() => navigate('/game')}
+          >
             Грати знову
           </button>
-          <button className="btn-action home" onClick={() => navigate('/')}>
+          <button 
+            className={`${styles.btnAction} ${styles.home}`} 
+            onClick={() => navigate('/')}
+          >
             Головне меню
           </button>
         </nav>

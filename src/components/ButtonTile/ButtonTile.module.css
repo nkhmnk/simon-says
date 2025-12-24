@@ -1,4 +1,4 @@
-.button-tile {
+.buttonTile {
   aspect-ratio: 1 / 1; 
   width: 100%;
   border-radius: 20px;
@@ -8,16 +8,17 @@
   border: 4px solid rgba(255, 255, 255, 0.1);
 }
 
-.button-tile:active {
+.buttonTile:active {
   transform: scale(0.95);
 }
 
-.button-tile.active {
+.active {
   opacity: 1;
   filter: brightness(1.4);
   transform: scale(1.05);
   box-shadow: 0 0 25px currentColor; 
 }
+
 
 .red    { background-color: #ff4d4d; color: #ff4d4d; }
 .green  { background-color: #2ecc71; color: #2ecc71; }
