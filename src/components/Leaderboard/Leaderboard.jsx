@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { SettingsContext } from '../../context/SettingsContext';
-import styles from './Leaderboard.module.css'; // Імпорт як модуль
+import styles from './Leaderboard.module.css';
 
 const Leaderboard = () => {
   const { leaderboard } = useContext(SettingsContext);

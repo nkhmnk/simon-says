@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from './Modal.module.css'; // Імпорт модулів
+import styles from './Modal.module.css';
 
 const Modal = ({ isOpen, children }) => {
   if (!isOpen) return null;

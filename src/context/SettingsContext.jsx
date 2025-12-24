@@ -22,16 +22,13 @@ export const SettingsProvider = ({ children }) => {
     localStorage.setItem('simon_settings', JSON.stringify(settings));
   }, [settings]);
 
-  // Функція для пошуку рекорду за ID (для ResultPage)
   const getRecordById = (id) => {
     return leaderboard.find(record => record.sessionId === id);
   };
 
-  // Оновлена функція додавання рекорду з ID сесії
   const addRecord = (name, score, sessionId) => {
     if (score <= 0) return; 
 
-    // Перевірка на дублікати за sessionId
     setLeaderboard(prev => {
       if (prev.some(r => r.sessionId === sessionId)) return prev;
 

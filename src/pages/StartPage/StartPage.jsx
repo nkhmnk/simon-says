@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import SettingsForm from '../../components/SettingsForm/SettingsForm';
-import styles from './StartPage.module.css'; // Імпорт модулів
+import styles from './StartPage.module.css'; 
 
 const StartPage = () => {
-  const navigate = useNavigate(); // Хук для навігації
+  const navigate = useNavigate(); 
 
   return (
     <div className={styles.startPage}>

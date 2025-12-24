@@ -27,13 +27,10 @@ const GamePage = () => {
 
   const handleExitToResults = () => {
     setIsModalOpen(false);
-    // Створюємо унікальний ID сесії
     const sessionId = `${settings.playerName.replace(/\s/g, '_')}_${Date.now()}`;
     
-    // Зберігаємо рекорд безпосередньо в момент завершення
     addRecord(settings.playerName, game.score, sessionId);
     
-    // Переходимо на динамічний роут
     navigate(`/result/${sessionId}`, { state: { score: game.score } });
   };
 
