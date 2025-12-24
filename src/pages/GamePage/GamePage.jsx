@@ -1,18 +1,25 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"; // Додаємо Redux хуки
 import Header from '../../components/Header/Header';
 import ButtonTile from '../../components/ButtonTile/ButtonTile';
 import Modal from '../../components/Modal/Modal';
 import useSimonGame from '../../hooks/useSimonGame';
-import { SettingsContext } from '../../context/SettingsContext';
+
+// Імпортуємо екшн для додавання рекорду
+import { addRecord } from '../../store/slices/gameSlice';
 
 import styles from './GamePage.module.css';
 import modalStyles from '../../components/Modal/Modal.module.css';
 
 const GamePage = () => {
-  const { settings, addRecord } = useContext(SettingsContext);
-  const game = useSimonGame(settings);
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // Ініціалізуємо диспетчер
+  
+  // Отримуємо налаштування безпосередньо з Redux Store
+  const settings = useSelector((state) => state.settings);
+  
+  const game = useSimonGame(settings);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -27,10 +34,18 @@ const GamePage = () => {
 
   const handleExitToResults = () => {
     setIsModalOpen(false);
+    
+    // Генеруємо унікальний ID сесії
     const sessionId = `${settings.playerName.replace(/\s/g, '_')}_${Date.now()}`;
     
-    addRecord(settings.playerName, game.score, sessionId);
+    // ВІДПРАВЛЯЄМО РЕЗУЛЬТАТ У REDUX
+    dispatch(addRecord({
+      name: settings.playerName,
+      score: game.score,
+      sessionId: sessionId
+    }));
     
+    // Переходимо на сторінку результатів
     navigate(`/result/${sessionId}`, { state: { score: game.score } });
   };
 
@@ -66,7 +81,10 @@ const GamePage = () => {
             <p>Рівень: <span>{game.level}</span></p>
           </div>
           <div className={modalStyles.modalActions}>
-            <button className={modalStyles.btnRestart} onClick={() => { setIsModalOpen(false); game.startGame(); }}>
+            <button 
+              className={modalStyles.btnRestart} 
+              onClick={() => { setIsModalOpen(false); game.startGame(); }}
+            >
               Наступний тур
             </button>
             <button className={modalStyles.btnExit} onClick={handleExitToResults}>
