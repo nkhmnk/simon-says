@@ -1,35 +1,58 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux"; // Використовуємо Redux для перевірки стану
+import React, { useState } from "react";
 import StartPage from './pages/StartPage/StartPage';
 import GamePage from './pages/GamePage/GamePage';
 import ResultPage from './pages/ResultPage/ResultPage';
-import NotFound from './pages/NotFound/NotFound';
+import "./App.css";
+import CookieConsent from "react-cookie-consent";
 
 function App() {
-  // Отримуємо ім'я гравця безпосередньо з Redux Store
-  const playerName = useSelector((state) => state.settings.playerName);
+  const [page, setPage] = useState("start");
+  const [finalScore, setFinalScore] = useState(0);
+
+  const startGame = () => {
+    setFinalScore(0);
+    setPage("game");
+  };
+
+  const handleGameOver = (score) => {
+    setFinalScore(score);
+    setPage("result");
+  };
+
+  const goToStart = () => {
+    setPage("start");
+  };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<StartPage />} />
-        
-        {/* Захищений маршрут: якщо ім'я порожнє або 'Гравець' за замовчуванням (опціонально), 
-            перенаправляємо на головну */}
-        <Route 
-          path="/game" 
-          element={playerName && playerName !== "" ? <GamePage /> : <Navigate to="/" replace />} 
+    <div className="App">
+      {page === "start" && (
+        <StartPage onStart={startGame} />
+      )}
+      
+      {page === "game" && (
+        <GamePage onGameOver={handleGameOver} />
+      )}
+      
+      {page === "result" && (
+        <ResultPage 
+          score={finalScore} 
+          onRestart={startGame} 
+          onMain={goToStart} 
         />
-        
-        <Route path="/result/:userId" element={<ResultPage />} />
-        
-        <Route path="/404" element={<NotFound />} />
-        
-        {/* Всі інші маршрути ведуть на 404 */}
-        <Route path="*" element={<Navigate to="/404" replace />} />
-      </Routes>
-    </Router>
+      )}
+
+      <CookieConsent
+  location="bottom"
+  buttonText="Прийняти"
+  cookieName="simonSaysCookieConsent"
+  style={{ background: "#2B373B", color: "#fff" }}
+  buttonStyle={{ color: "#4e503b", fontSize: "13px", borderRadius: "5px" }}
+  expires={150}
+>
+  Цей сайт використовує локальне сховище для збереження ваших рекордів. Продовжуючи гру, ви погоджуєтеся з нашою{" "}
+  <a href="/PRIVACY_POLICY.md" style={{ color: "#ffd700" }}>Політикою конфіденційності</a>.
+</CookieConsent>
+    </div>
   );
 }
 
