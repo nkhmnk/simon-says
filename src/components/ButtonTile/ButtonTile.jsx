@@ -1,15 +1,17 @@
 /**
- * @component
- * @description Компонент інтерактивної плитки кольору, яка реагує на дії гравця та ігрові події.
- * * @param {Object} props - Властивості компонента
- * @param {string} props.color - Назва кольору (напр., 'green', 'red')
- * @param {boolean} props.isActive - Визначає, чи підсвічується плитка в даний момент
- * @param {boolean} props.isDisabled - Чи заблокована плитка для натискання
- * @param {Function} props.onClick - Функція-обробник кліку
+ * @module components/ButtonTile
  */
+import "./ButtonTile.css"; // Імпорт має бути НАД основним описом компонента
 
-import "./ButtonTile.css";
-
+/**
+ * Компонент ігрової плитки (кнопки), яка реагує на натискання та підсвічується.
+ * @component
+ * @param {Object} props - Властивості компонента.
+ * @param {string} props.color - Колір плитки (наприклад, 'red', 'blue').
+ * @param {boolean} props.active - Стан підсвічування плитки.
+ * @param {Function} props.onClick - Обробник події натискання.
+ * @returns {JSX.Element} Рендерить інтерактивну плитку.
+ */
 const ButtonTile = ({ color, active, onClick }) => {
   return (
     <div 

@@ -3,7 +3,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import settingsReducer from '../../store/slices/settingsSlice';
 import SettingsForm from './SettingsForm';
 
-// Створюємо "фейковий" стор для Storybook
 const mockStore = configureStore({
   reducer: {
     settings: settingsReducer,
@@ -17,3 +16,4 @@ export default {
 };
 
 export const Default = () => <SettingsForm />;
+export const FastMode = () => <SettingsForm />;

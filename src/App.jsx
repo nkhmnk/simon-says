@@ -1,3 +1,8 @@
+/**
+ * @module App
+ * @description Головний компонент додатку "Simon Says". 
+ * Керує маршрутизацією, ініціалізацією глобального стану та відображенням основних екранів гри.
+ */
 import React, { useState } from "react";
 import StartPage from './pages/StartPage/StartPage';
 import GamePage from './pages/GamePage/GamePage';
@@ -5,6 +10,11 @@ import ResultPage from './pages/ResultPage/ResultPage';
 import "./App.css";
 import CookieConsent from "react-cookie-consent";
 
+/**
+ * Рендерить структуру додатку, включаючи навігацію та модальні вікна (Cookie Consent).
+ * @component
+ * @returns {JSX.Element} Головний контейнер застосунку.
+ */
 function App() {
   const [page, setPage] = useState("start");
   const [finalScore, setFinalScore] = useState(0);

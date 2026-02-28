@@ -27,6 +27,12 @@ const schema = yup.object().shape({
     .required()
 });
 
+/**
+ * @component
+ * @description Форма для конфігурації параметрів гри (ім'я гравця, складність).
+ * Використовує react-hook-form для валідації.
+ * @returns {JSX.Element} Форма налаштувань
+ */
 const SettingsForm = () => {
   const { settings, updateSettings } = useContext(SettingsContext);
 
