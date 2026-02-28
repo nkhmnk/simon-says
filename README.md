@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# Simon Says Game (React Edition)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проєкт реалізовано в межах навчальної дисципліни **"Стандартизація та документування ПЗ"**. Це інтерактивна веб-гра на тренування пам'яті, розроблена з дотриманням стандартів технічної документації.
 
-## Available Scripts
+## 1. Конфігурація та вимоги
+Для коректної роботи та розгортання проєкту необхідно:
+- **Node.js**: Версія 18.x або вище.
+- **Браузер**: Будь-який сучасний браузер (Chrome, Firefox, Edge).
 
-In the project directory, you can run:
+## 2. Базові команди
+Використовуйте термінал у корені проєкту для виконання наступних дій:
 
-### `npm start`
+- `npm install` — встановлення всіх необхідних залежностей та бібліотек.
+- `npm start` — запуск гри у режимі розробки (відкриється за адресою [http://localhost:3000](http://localhost:3000)).
+- `npm run build` — створення оптимізованої продуктової збірки у папці `build`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 3. Юридична інформація та ліцензування
+Згідно з вимогами стандартизації, проєкт містить юридичні документи:
+- **Ліцензія користувача**: [MIT License](./LICENSE) — визначає права на використання коду.
+- **Звіт про сумісність**: [LICENSE_REPORT.txt](./LICENSE_REPORT.txt) — технічний звіт, що підтверджує легітимність використання сторонніх бібліотек (згенеровано через `license-checker`).
+- **Політика конфіденційності**: [PRIVACY_POLICY.md](./PRIVACY_POLICY.md) — опис обробки даних згідно з GDPR.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 4. Технологічний стек
+- **Frontend**: React (Functional Components, Hooks)
+- **State Management**: Redux Toolkit
+- **Routing**: React Router DOM
+- **Validation**: React Hook Form
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 5. Авторство
+- **Виконавиця**: Хоменко Надія
+- **Група**: ІПЗ-23-4
+- **Рік**: 2026
