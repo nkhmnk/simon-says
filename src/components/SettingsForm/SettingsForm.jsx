@@ -1,3 +1,9 @@
+/**
+ * @component
+ * @description Форма для конфігурації параметрів гри (ім'я гравця, складність).
+ * Використовує react-hook-form для валідації.
+ */
+
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
